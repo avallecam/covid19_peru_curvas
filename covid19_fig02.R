@@ -18,7 +18,7 @@ if(!require("tidyverse")) install.packages("tidyverse")
 if(!require("aweek")) install.packages("aweek")
 if(!require("skimr")) install.packages("skimr")
 if(!require("patchwork")) install.packages("patchwork")
-remotes::install_github("avallecam/covid19viz")
+if(!require("covid19viz")) remotes::install_github("avallecam/covid19viz")
 
 library(tidyverse)
 #library(googlesheets4)
@@ -240,7 +240,8 @@ f03 <- union_all(date_onset_db,date_confirmed_db) %>%
   scale_color_viridis_d(option = "cividis") +
   
   facet_wrap(~country,scales = "free",nrow = 1) +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 6)) +
+  scale_y_log10() +
+  #scale_y_continuous(breaks = scales::pretty_breaks(n = 6),trans = "log10") +
   scale_x_date(date_breaks = "7 day",date_labels = "%b-%d") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
         #legend.position = "bottom"
@@ -263,15 +264,15 @@ date_onset_db_max <- date_onset_db %>%
   filter(case_number==max(case_number)) %>% 
   select(country,date_max_inc=date)
 
-model_to_growthrate <- function(data) {
+model_to_doublingtime <- function(data) {
   data %>% 
     lm(log(case_number)~date,
        data = .,
        na.action = "na.exclude") %>% 
     avallecam::epi_tidymodel_coef() %>% 
     filter(term!="(Intercept)") %>% 
-    select(estimate,conf.low,conf.high) #%>% 
-    #mutate_all(.funs = ~log(2)/.x)
+    select(estimate,conf.low,conf.high) %>% 
+    mutate_all(.funs = ~log(2)/.x)
 }
 
 union_all(date_onset_db,date_confirmed_db) %>% 
@@ -279,7 +280,7 @@ union_all(date_onset_db,date_confirmed_db) %>%
   filter(date<=date_max_inc) %>% 
   group_by(country,date_type,case_type) %>% 
   nest() %>% 
-  mutate(data_new=map(.x = data,.f = model_to_growthrate)) %>% 
+  mutate(data_new=map(.x = data,.f = model_to_doublingtime)) %>% 
   unnest(cols = c(data_new))
 
 union_all(date_onset_db,date_confirmed_db) %>% 
@@ -287,5 +288,5 @@ union_all(date_onset_db,date_confirmed_db) %>%
   filter(date>date_max_inc) %>% 
   group_by(country,date_type,case_type) %>% 
   nest() %>% 
-  mutate(data_new=map(.x = data,.f = model_to_growthrate)) %>% 
+  mutate(data_new=map(.x = data,.f = model_to_doublingtime)) %>% 
   unnest(cols = c(data_new))
