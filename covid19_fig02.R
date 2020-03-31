@@ -1,5 +1,6 @@
 #' about curve cumulative -> use the incident curve
 #' https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(03)13335-1/fulltext
+#' statistical dependence in cumulative data
 #' 
 #' about delays
 #' https://twitter.com/AdamJKucharski/status/1229708001243795458
@@ -10,8 +11,14 @@
 #' about the dataset
 #' https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30119-5/fulltext
 
-# FIGURE AND TABLES ---------
-# DELAY SIMPTOMS-CONFIRMATION INTERNACIONAL
+# DELAY SIMPTOMS-CONFIRMATION INTERNACIONAL ------------
+
+if(!require("remotes")) install.packages("remotes")
+if(!require("tidyverse")) install.packages("tidyverse")
+if(!require("aweek")) install.packages("aweek")
+if(!require("skimr")) install.packages("skimr")
+if(!require("patchwork")) install.packages("patchwork")
+remotes::install_github("avallecam/covid19viz")
 
 library(tidyverse)
 #library(googlesheets4)
@@ -269,7 +276,7 @@ model_to_growthrate <- function(data) {
 
 union_all(date_onset_db,date_confirmed_db) %>% 
   left_join(date_onset_db_max) %>% 
-  filter(date<date_max_inc) %>% 
+  filter(date<=date_max_inc) %>% 
   group_by(country,date_type,case_type) %>% 
   nest() %>% 
   mutate(data_new=map(.x = data,.f = model_to_growthrate)) %>% 

@@ -1,29 +1,28 @@
 
-# IDEAS ------
-# # porcentaje de asintomáticos 32% (fuente: https://twitter.com/cmyeaton/status/1241880859000610816)
-# # delay entre sintomas y admisión/confirmación (fuente: https://www.reconlearn.org/solutions/real-time-response-2.html)
+# INCIDENT CASES IN PERU ------------------------------------------
 
-
-# REFERENCIAS papers --------
-# #rompe supuesto de independencia
-
-# REFERENCIAS graficas --------
-
-# if(!require("remotes")) install.packages("remotes")
-# if(!require("tidyverse")) install.packages("tidyverse")
-# remotes::install_github("avallecam/covid19viz")
+if(!require("remotes")) install.packages("remotes")
+if(!require("tidyverse")) install.packages("tidyverse")
+remotes::install_github("avallecam/covid19viz")
 
 library(tidyverse)
 library(covid19viz)
 
-#jhu_sitrep_country_report(country_region = "Peru")
+# ejemplo -----------------------------------------------------------------
 
+# jhu_sitrep_country_report(country_region = "Peru")
+
+# datos internacionales con dia de retraso 
 dat_jhu <- jhu_sitrep_all_sources(country_region="Peru") %>%
   jhu_sitrep_all_sources_tidy() %>%
   filter(confirmed_cumulative>0) %>% 
   arrange(desc(confirmed_cumulative))
 
+# datos colectados publicamente
 dat_url <- rio::import("https://github.com/jincio/COVID_19_PERU/blob/master/docs/reportes_minsa.xlsx?raw=true")
+
+# importar ----------------------------------------------------------------
+
 dat_per <- dat_url %>%  
   as_tibble() %>% 
   janitor::clean_names() %>% 
@@ -43,13 +42,16 @@ dat_per <- dat_url %>%
   mutate(confirmed_incidence=confirmed_cumulative-lag(confirmed_cumulative,default = 0)) %>% 
   arrange(desc(confirmed_cumulative))
 
-#dat_per %>% count(dia,sort = T)
+# explorar ----------------------------------------------------------------
 
+#dat_per %>% count(dia,sort = T)
 dat_jhu %>% glimpse()
 dat_per %>% glimpse()
 
 data_input <- dat_jhu
 data_input <- dat_per
+
+# figura ------------------------------------------------------------------
 
 f1 <- data_input %>%
   who_sitrep_ggline(y_cum_value = confirmed_cumulative,#color = province_state,
@@ -61,9 +63,8 @@ f2 <- data_input %>%
                    n_breaks=10) #+
 #theme(legend.position="none")
 
-# FIG.A ACUMULADA DE DETECCIONES POR DÍA ---------
 
-# FIG.B DETECCIONES POR DÍA ---------
+# union ------------------------------------------------------------------
 
 library(patchwork)
 f1 + f2 + plot_annotation(tag_levels = 'A')
