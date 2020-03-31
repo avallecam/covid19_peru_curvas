@@ -1,0 +1,1 @@
+# curva epidemica: consideraciones y limitantes
