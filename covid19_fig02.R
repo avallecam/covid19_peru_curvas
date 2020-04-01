@@ -74,7 +74,7 @@ ncovdb_out_hubei <-
          fecha_conf_epiweek_w_fct
          ) %>% 
   mutate(country=case_when(
-    country=="China"~"China (Fuera de Hubei)",
+    country=="China"~"China (excluyendo Hubei)",
     country=="Japan"~"Japón",
     TRUE~country)) %>% 
   mutate(country=fct_infreq(f = country)) %>% 
@@ -130,6 +130,8 @@ ncovdb_out_hubei %>%
 
 f01 <- ncovdb_out_hubei %>% 
   filter(as.numeric(country)<3) %>% 
+  mutate(fecha_ini_epiweek_w_fct=fct_relabel(.f = fecha_ini_epiweek_w_fct,
+                                             .fun = ~str_replace(.x,"W","S"))) %>% 
   
   ggplot(aes(tiempo_obtencion_sintomas,fill=fecha_ini_epiweek_w_fct)) +
   geom_bar(width = 0.9) +
@@ -141,8 +143,8 @@ f01 <- ncovdb_out_hubei %>%
   # scale_x_continuous(breaks = int_breaks_rounded) +
   labs(#title = "Demora entre Inicio de Síntomas y Confirmación\ndel caso por Semana Epidemiológica",
        y="Número de casos",
-       x = "Tiempo de Inicio de síntomas a Confirmación del caso (días)",
-       caption = "\nW: Week o Semana Epidemiológica\n\nFuente: Open COVID-19 Data Curation Group",
+       x = "Tiempo del Inicio de síntomas a la Confirmación del caso (días)",
+       #caption = "\nW: Week o Semana Epidemiológica\n\nFuente: Open COVID-19 Data Curation Group",
        fill="Semana de\ninicio de\nsíntomas")
 
 #ggsave("figure/fig01-ncovdb_out_hubei-tiempo_obtencion_sintomas.png",dpi = "retina",width = 9,height = 5)
@@ -253,7 +255,7 @@ f03 <- union_all(date_onset_db,date_confirmed_db) %>%
 library(patchwork)
 
 f02 / f03 / f01 + patchwork::plot_annotation(tag_levels = "A")
-ggsave("figure/fig01-curve_day-incidence_cumulative_delay.png",height = 9,width = 9,dpi = "retina")
+ggsave("figure/fig01-curve_day-incidence_cumulative_delay.png",height = 10,width = 9,dpi = "retina")
 
 
 # doubling time -----------------------------------------------------------
