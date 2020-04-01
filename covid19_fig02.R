@@ -1,24 +1,5 @@
-#' about curve cumulative -> use the incident curve
-#' https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(03)13335-1/fulltext
-#' statistical dependence in cumulative data
-#' 
-#' about delays
-#' https://twitter.com/AdamJKucharski/status/1229708001243795458
-#' 
-#' abount modeling SEIR with stochastic rather than deterministic models
-#' https://royalsocietypublishing.org/doi/full/10.1098/rspb.2015.0347
-#' 
-#' about the dataset
-#' https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(20)30119-5/fulltext
 
 # DELAY SIMPTOMS-CONFIRMATION INTERNACIONAL ------------
-
-if(!require("remotes")) install.packages("remotes")
-if(!require("tidyverse")) install.packages("tidyverse")
-if(!require("aweek")) install.packages("aweek")
-if(!require("skimr")) install.packages("skimr")
-if(!require("patchwork")) install.packages("patchwork")
-if(!require("covid19viz")) remotes::install_github("avallecam/covid19viz")
 
 library(tidyverse)
 #library(googlesheets4)
