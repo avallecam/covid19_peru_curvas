@@ -47,7 +47,9 @@ if(!require("covid19viz")) remotes::install_github("avallecam/covid19viz")
 	year = {2020},
 	keywords = {},
 	abstract = {-},
-	issn = {1726-4642},	pages = {378--80},	doi = {10.17843/rpmesp.2020.372.5461},
+	issn = {1726-4642},	
+	pages = {378--80},	
+	doi = {10.17843/rpmesp.2020.372.5461},
 	url = {https://rpmesp.ins.gob.pe/index.php/rpmesp/article/view/5461}
 }
 ```
