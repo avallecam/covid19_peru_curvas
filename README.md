@@ -24,6 +24,34 @@ if(!require("covid19viz")) remotes::install_github("avallecam/covid19viz")
 
 2. Abrir y ejecutar el archivo __`covid19_fig02.R`__
 
+## Citar
+
+```
+@software{andree_valle_campos_2020_4014221,
+  author       = {Andree Valle Campos},
+  title        = {avallecam/covid19\_peru\_curvas: First release},
+  month        = sep,
+  year         = 2020,
+  publisher    = {Zenodo},
+  version      = {v1.0},
+  doi          = {10.5281/zenodo.4014221},
+  url          = {https://doi.org/10.5281/zenodo.4014221}
+}
+
+@article{RPMESP5461,
+	author = {Steev Loyola y Andree Valle y Stephanie Montero y Gabriel Carrasco-Escobar},
+	title = {Recomendaciones para describir de forma adecuada una curva epidémica de COVID-19},
+	journal = {Revista Peruana de Medicina Experimental y Salud Pública},
+	volume = {37},
+	number = {2},
+	year = {2020},
+	keywords = {},
+	abstract = {-},
+	issn = {1726-4642},	pages = {378--80},	doi = {10.17843/rpmesp.2020.372.5461},
+	url = {https://rpmesp.ins.gob.pe/index.php/rpmesp/article/view/5461}
+}
+```
+
 ## Referencias
 
 - about curve cumulative
