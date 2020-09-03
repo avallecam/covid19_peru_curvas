@@ -1,5 +1,11 @@
 # Curva epidemica: consideraciones y limitantes
 
+
+
+[![DOI](https://zenodo.org/badge/251691938.svg)](https://zenodo.org/badge/latestdoi/251691938)
+
+
+
 Este repositorio posee las instrucciones para reproducir la Figura 1 del borrador: "Recomendaciones para describir de forma adecuada una curva epidémica de COVID-19"
 
 ## Instrucciones
