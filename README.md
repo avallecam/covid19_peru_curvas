@@ -7,6 +7,7 @@
 
 
 Este repositorio posee las instrucciones para reproducir la Figura 1 del borrador: "Recomendaciones para describir de forma adecuada una curva epidémica de COVID-19"
+(DOI: https://doi.org/10.17843/rpmesp.2020.372.5461)
 
 ## Instrucciones
 
